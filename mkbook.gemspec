@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/henryhyn/mkbook'
   spec.license       = 'MIT'
 
-  spec.files         = Dir['lib/**/*.rb'] + Dir['bin/*']
+  spec.files         = Dir['bin/*','lib/**/*','lib/template/.mkbook.yml','lib/template/.gitignore','lib/template/images/.keep','lib/template/resources/.keep']
   spec.bindir        = 'bin'
   spec.executables   = ['mkbook']
   spec.require_paths = ['lib']
