@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "mkbook"
+require "mkbook/make_book"
+require 'optparse'
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
@@ -12,4 +13,137 @@ require "mkbook"
 
 # require "irb"
 # IRB.start
-Mkbook::Mkbook.run(ARGV)
+# Mkbook::Mkbook.run(ARGV)
+
+# 设置全局变量
+here = Dir.getwd              # 工作目录/项目目录
+root = File.dirname(__FILE__) # program directory
+
+# 设置默认选项
+options = {
+    :lang          => "zh",
+    :format        => "markdown",
+    :build         => ["pdf"],
+    :template      => "book",
+    :option        => "a5paper,centering,openany",
+    :workspace     => here,
+    :dir_source    => here,
+    :dir_output    => File.join(here, "out"),
+    :command       => "build",
+    :file_preface  => "face*.md",
+    :file_chapters => "chap*.md",
+    :file_appendix => "appx*.md"
+}
+
+# 定义选项解析器
+opts = {}
+OptionParser.new do |opt|
+  executable_name = File.basename($PROGRAM_NAME)
+  opt.banner = "Make ebooks from markdown plain text
+    Usage: #{executable_name} [options]\n"
+
+  # 定义输出格式
+  opt.on("-b","--build FORMAT","build format: pdf,html,epub. seperated by ','") do |format|
+    format_options = format.split(",")
+    format_options.each do |fmt|
+      unless ["pdf","index","html","epub"].include?(fmt)
+        raise ArgumentError,"FORMAT must be one of 'pdf,index,html,epub' format"
+      end
+    end
+    opts[:command] = "build"
+    opts[:build] = format_options
+  end
+
+  # 添加文档
+  opt.on("-a", "--add TYPE", "TYPE: face, chap, appx") do |setting|
+    opts[:command] = "add"
+    opts[:genre] = setting
+  end
+
+  # 定义 debug 模式, 输出更多信息, 用于调试
+  opt.on("-d","--[no-]debug","debug mode") do |setting|
+    opts[:debug] = setting
+  end
+
+  # 定义 定稿 模式, 编译三遍, 建立索引、参考文献
+  opt.on("-f","--[no-]final","final mode") do |setting|
+    opts[:final] = setting
+  end
+
+  # 选择语言类型
+  opt.on("-l","--lang LANG","language selection") do |lang|
+    opts[:lang] = lang
+  end
+
+  # 选择模板
+  opt.on("-t","--template template.tex","latex template file") do |template|
+    unless File.exists? File.join(root, "../lib", "template_#{template}.tex")
+      raise ArgumentError,"template file \"#{template}\" doesn't exist"
+    end
+    opts[:template] = template
+  end
+
+  # 设置书的名字
+  opt.on("-n","--name book name","book name") do |name|
+    unless name =~ /^[a-zA-Z0-9-]+$/
+      raise ArgumentError,"name should be [a-zA-Z0-9-]"
+    end
+    opts[:name] = name
+  end
+
+  # 定义生成器
+  opt.on("-g","--generate project","project name") do |name|
+    unless name =~ /^[a-zA-Z0-9-]+$/
+      raise ArgumentError,"name should be [a-zA-Z0-9-]"
+    end
+    opts[:command] = "generate"
+    opts[:name] = name
+  end
+
+  # 项目路径
+  opt.on("-s","--src-dir directory","source directory") do |directory|
+    opts[:dir_source] = directory
+    opts[:dir_output] = File.join(directory, "out")
+  end
+
+
+  # 输出路径
+  opt.on("-o","--out-dir directory","output directory") do |directory|
+    opts[:dir_output] = directory
+  end
+
+
+  # 工作路径
+  opt.on("-w","--workspace path","workspace path") do |directory|
+    opts[:workspace] = directory
+  end
+end.parse!
+options.merge!(opts)
+
+options[:name] = File.basename(here) unless options[:name]
+
+puts options.inspect if options[:debug]
+
+if options[:command] == "generate"
+  Mkbook::MakeBook.new.create(options)
+  exit
+end
+
+# 加载配置文件
+options[:project] = options[:dir_source]
+config_file = File.join(options[:project], '.mkbook.yml')
+if File.exists? config_file
+  config_options = YAML.load_file(config_file)
+  options.merge!(config_options) if config_options
+else
+  log_error("This is not an ebook project, or missing .mkbook.yml.
+        Use the following command to generate project first,
+            mkbook --generate <foo>
+        Or create an empty file .mkbook.yml manually.\n")
+  exit
+end
+options.merge!(opts)
+
+if options[:command] == "build"
+  Mkbook::MakeBook.new.build(options)
+end
