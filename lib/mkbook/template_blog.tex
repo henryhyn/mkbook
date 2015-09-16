@@ -1,0 +1,26 @@
+\documentclass[adobefonts,fancyhdr,fntef,footer,<%= @option %>]{htexart}
+
+\title{<%= @config["title"] %>}
+\author{<%= @config["author"] %>}
+\date{<%= @config["date"] %>}
+
+\def\contentsname{<%= @config["contents"] %>}
+\def\figurename{<%= @config["figure"] %>}
+\def\tablename{<%= @config["table"] %>}
+\def\appendixname{<%= @config["appendix"] %>}
+
+\begin{document}
+
+<%= @chapters %>
+
+\addcontentsline{toc}{section}{\refname}
+\bibliography{/usr/local/texlive/2013/texmf-dist/tex/latex/htex/htexbib}
+
+
+\vskip2cm
+
+\begin{quote}
+\textbf{开源书屋}致力于建立一整套编写电子书的解决方案, 并提供大量开源免费、高质量的电子书.
+请关注我们的\href{http://weibo.com/oboooks}{官方微博}, 及时获取最新资源!
+\end{quote}
+\end{document}

@@ -1,0 +1,36 @@
+\documentclass[adobefonts,fancyhdr,fntef,header,<%= @option %>]{htexbook}
+
+\title{<%= @config["title"] %>}
+\author{<%= @config["author"] %>}
+\date{<%= @config["date"] %>}
+
+\def\contentsname{<%= @config["contents"] %>}
+\def\figurename{<%= @config["figure"] %>}
+\def\tablename{<%= @config["table"] %>}
+\def\appendixname{<%= @config["appendix"] %>}
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{0}
+\begin{document}
+\maketitle
+
+\frontmatter
+<%= @preface %>
+
+\tableofcontents
+% \listoffigures
+% \listoftables
+
+\mainmatter
+<%= @chapters %>
+
+\begin{appendix}
+<%= @appendix %>
+\end{appendix}
+
+\backmatter
+\addcontentsline{toc}{chapter}{\refname}
+\bibliography{/usr/local/texlive/2013/texmf-dist/tex/latex/htex/htexbib}
+\newpage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+\end{document}

@@ -1,0 +1,21 @@
+\documentclass[adobefonts,fancyhdr,fntef,footer,<%= @option %>]{htexart}
+
+\title{<%= @config["title"] %>}
+\author{<%= @config["author"] %>}
+\date{<%= @config["date"] %>}
+
+\def\contentsname{<%= @config["contents"] %>}
+\def\figurename{<%= @config["figure"] %>}
+\def\tablename{<%= @config["table"] %>}
+\def\appendixname{<%= @config["appendix"] %>}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+<%= @chapters %>
+
+\addcontentsline{toc}{section}{\refname}
+\bibliography{/usr/local/texlive/2013/texmf-dist/tex/latex/htex/htexbib}
+\end{document}
