@@ -1,5 +1,5 @@
 module Mkbook
-  class MakeBookBuild < MakeBook
+  class MkbookBuild < Mkbook
     self.abstract_command = true
     self.command = 'build'
     self.summary = '生成电子书'
@@ -10,19 +10,19 @@ module Mkbook
       puts "mkbook build #{self.class.command}"
     end
 
-    class PDF < MakeBookBuild
+    class PDF < MkbookBuild
       self.summary = 'Generate pdf output'
     end
 
-    class HTML < MakeBookBuild
+    class HTML < MkbookBuild
       self.summary = 'Generate html output'
     end
 
-    class EPUB < MakeBookBuild
+    class EPUB < MkbookBuild
       self.summary = 'Generate epub output'
     end
 
-    class MOBI < MakeBookBuild
+    class MOBI < MkbookBuild
       self.summary = 'Generate mobi output'
     end
   end

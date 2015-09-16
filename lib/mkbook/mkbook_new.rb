@@ -1,5 +1,5 @@
 module Mkbook
-  class MakeBookNew < MakeBook
+  class MkbookNew < Mkbook
     self.command = 'new'
     self.summary = '新建电子书'
     self.description = '新建一个电子书项目'

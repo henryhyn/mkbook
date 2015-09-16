@@ -12,4 +12,4 @@ require "mkbook"
 
 # require "irb"
 # IRB.start
-Mkbook::MakeBook.run(ARGV)
+Mkbook::Mkbook.run(ARGV)

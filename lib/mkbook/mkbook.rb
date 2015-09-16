@@ -2,7 +2,7 @@ require 'claide'
 require 'colored'
 
 module Mkbook
-  class MakeBook < CLAide::Command
+  class Mkbook < CLAide::Command
     self.abstract_command = true
     self.command = 'mkbook'
     self.description = '电子书生成工具'
