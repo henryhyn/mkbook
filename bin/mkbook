@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+# mkbook -g name -w workspace
+# mkbook -s dir_source -o dir_output
+# Mkbook::MakeBook.find(:dir_source => dir, :dir_output => dir).build
 
 require "bundler/setup"
 require "mkbook/make_book"
