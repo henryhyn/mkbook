@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/henryhyn/mkbook'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files         = Dir['lib/**/*.rb'] + Dir['bin/*']
   spec.bindir        = 'bin'
   spec.executables   = ['mkbook']
   spec.require_paths = ['lib']
@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
 
-  spec.add_dependency 'claide', '~> 0.9.1'
-  spec.add_dependency 'colored', '~> 1.2'
+  spec.add_runtime_dependency 'claide', '~> 0.9.1'
+  spec.add_runtime_dependency 'colored', '~> 1.2'
 end
