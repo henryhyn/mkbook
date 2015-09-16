@@ -21,23 +21,23 @@ module Mkbook
       ENV['PATH'].split(File::PATH_SEPARATOR).map do |path|
         cmd = "#{path}/#{command}"
         File.executable?(cmd) || File.executable?("#{cmd}.exe") || File.executable?("#{cmd}.cmd")
-      end.inject{|a, b| a || b}
+      end.inject { |a, b| a || b }
     end
 
-    def self.log(type,msg)
+    def self.log(type, msg)
       print "[#{type}] #{Time.now} #{msg}"
     end
 
     def self.log_info(msg)
-      log("INFO",msg)
+      log("INFO", msg)
     end
 
     def self.log_error(msg)
-      log("ERROR",msg)
+      log("ERROR", msg)
     end
 
     def self.log_debug(msg)
-      log("DEBUG",msg)
+      log("DEBUG", msg)
     end
   end
 end

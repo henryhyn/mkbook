@@ -47,11 +47,11 @@ OptionParser.new do |opt|
     Usage: #{executable_name} [options]\n"
 
   # 定义输出格式
-  opt.on("-b","--build FORMAT","build format: pdf,html,epub. seperated by ','") do |format|
+  opt.on("-b", "--build FORMAT", "build format: pdf,html,epub. seperated by ','") do |format|
     format_options = format.split(",")
     format_options.each do |fmt|
-      unless ["pdf","index","html","epub"].include?(fmt)
-        raise ArgumentError,"FORMAT must be one of 'pdf,index,html,epub' format"
+      unless ["pdf", "index", "html", "epub"].include?(fmt)
+        raise ArgumentError, "FORMAT must be one of 'pdf,index,html,epub' format"
       end
     end
     opts[:command] = "build"
@@ -65,60 +65,60 @@ OptionParser.new do |opt|
   end
 
   # 定义 debug 模式, 输出更多信息, 用于调试
-  opt.on("-d","--[no-]debug","debug mode") do |setting|
+  opt.on("-d", "--[no-]debug", "debug mode") do |setting|
     opts[:debug] = setting
   end
 
   # 定义 定稿 模式, 编译三遍, 建立索引、参考文献
-  opt.on("-f","--[no-]final","final mode") do |setting|
+  opt.on("-f", "--[no-]final", "final mode") do |setting|
     opts[:final] = setting
   end
 
   # 选择语言类型
-  opt.on("-l","--lang LANG","language selection") do |lang|
+  opt.on("-l", "--lang LANG", "language selection") do |lang|
     opts[:lang] = lang
   end
 
   # 选择模板
-  opt.on("-t","--template template.tex","latex template file") do |template|
+  opt.on("-t", "--template template.tex", "latex template file") do |template|
     unless File.exists? File.join(root, "../lib", "template_#{template}.tex")
-      raise ArgumentError,"template file \"#{template}\" doesn't exist"
+      raise ArgumentError, "template file \"#{template}\" doesn't exist"
     end
     opts[:template] = template
   end
 
   # 设置书的名字
-  opt.on("-n","--name book name","book name") do |name|
+  opt.on("-n", "--name book name", "book name") do |name|
     unless name =~ /^[a-zA-Z0-9-]+$/
-      raise ArgumentError,"name should be [a-zA-Z0-9-]"
+      raise ArgumentError, "name should be [a-zA-Z0-9-]"
     end
     opts[:name] = name
   end
 
   # 定义生成器
-  opt.on("-g","--generate project","project name") do |name|
+  opt.on("-g", "--generate project", "project name") do |name|
     unless name =~ /^[a-zA-Z0-9-]+$/
-      raise ArgumentError,"name should be [a-zA-Z0-9-]"
+      raise ArgumentError, "name should be [a-zA-Z0-9-]"
     end
     opts[:command] = "generate"
     opts[:name] = name
   end
 
   # 项目路径
-  opt.on("-s","--src-dir directory","source directory") do |directory|
+  opt.on("-s", "--src-dir directory", "source directory") do |directory|
     opts[:dir_source] = directory
     opts[:dir_output] = File.join(directory, "out")
   end
 
 
   # 输出路径
-  opt.on("-o","--out-dir directory","output directory") do |directory|
+  opt.on("-o", "--out-dir directory", "output directory") do |directory|
     opts[:dir_output] = directory
   end
 
 
   # 工作路径
-  opt.on("-w","--workspace path","workspace path") do |directory|
+  opt.on("-w", "--workspace path", "workspace path") do |directory|
     opts[:workspace] = directory
   end
 end.parse!

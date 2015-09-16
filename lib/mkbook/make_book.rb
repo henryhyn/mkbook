@@ -154,7 +154,7 @@ module Mkbook
     end
 
     def check_environment
-      missing = ['pandoc', 'xelatex'].reject{ |command| Utils.command_exists?(command) }
+      missing = ['pandoc', 'xelatex'].reject { |command| Utils.command_exists?(command) }
       unless missing.empty?
         Utils.log_error "Missing dependencies: #{missing.join(', ')}."
         puts "\n\tInstall these and try again."
@@ -233,7 +233,7 @@ module Mkbook
                       .gsub(/\s*#+\s*$/, '')      # 删除行尾的 # 号
                 end
         name = file.gsub(/^src\//, '')
-        index_string << { name: name, title: title }
+        index_string << {name: name, title: title}
       end
       index_string
     end
@@ -252,7 +252,7 @@ module Mkbook
           pipe.close_write
           pipe.read
         end
-        IO.write(File.join(@dir_html, "#{File.basename(file,'.md')}.htm"), html)
+        IO.write(File.join(@dir_html, "#{File.basename(file, '.md')}.htm"), html)
       end
     end
 
