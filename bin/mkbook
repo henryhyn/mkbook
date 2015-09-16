@@ -10,5 +10,6 @@ require "mkbook"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start
+# require "irb"
+# IRB.start
+Mkbook::MakeBook.run(ARGV)
