@@ -5,7 +5,7 @@
 # Mkbook::MakeBook.find(:dir_source => dir, :dir_output => dir).build
 
 require "bundler/setup"
-require "mkbook/make_book"
+require "mkbook"
 require 'optparse'
 
 # You can add fixtures and/or initialization code here to make experimenting

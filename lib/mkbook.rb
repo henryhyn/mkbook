@@ -1,7 +1,5 @@
 require 'mkbook/version'
-require 'mkbook/mkbook'
-require 'mkbook/mkbook_new'
-require 'mkbook/mkbook_build'
+require 'mkbook/make_book'
 
 module Mkbook
   # Your code goes here...
