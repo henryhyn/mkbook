@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'claide', '~> 0.9.1'
   spec.add_runtime_dependency 'colored', '~> 1.2'
+  spec.add_runtime_dependency 'replace', '~> 1.0.1'
 end

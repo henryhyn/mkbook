@@ -1,0 +1,10 @@
+---
+:lang: zh
+:build:
+- pdf
+:template: book
+:option: a5paper,centering,openany
+:file_preface: face*.md
+:file_chapters: chap*.md
+:file_appendix: appx*.md
+:format: markdown
