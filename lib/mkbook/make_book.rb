@@ -205,7 +205,7 @@ module Mkbook
       end.join("\n\n")
 
       Utils.log_info("Convert markdown into latex ... ")
-      latex = IO.popen("pandoc --no-wrap --chapters -f #{@format} -t latex", 'w+') do |pipe|
+      latex = IO.popen("pandoc --wrap=none --top-level-division=chapter -f #{@format} -t latex", 'w+') do |pipe|
         pipe.write(Utils.pre_pandoc(markdown))
         pipe.close_write
         Utils.post_pandoc(pipe.read)
@@ -247,7 +247,7 @@ module Mkbook
       Dir["#{files}"].sort.map do |file|
         puts "\t\033[32mconvert\033[0m #{file}"
         markdown = IO.read(file)
-        html = IO.popen("pandoc --no-wrap --chapters -f #{@format} -t html", 'w+') do |pipe|
+        html = IO.popen("pandoc --wrap=none --top-level-division=chapter -f #{@format} -t html", 'w+') do |pipe|
           pipe.write(markdown)
           pipe.close_write
           pipe.read
